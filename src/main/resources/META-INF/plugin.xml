@@ -1,0 +1,50 @@
+<idea-plugin>
+    <id>org.example.sqlinjection-php-ide-plugin</id>
+    <name>Potential SqlInjection detection for PHP frameworks</name>
+    <version>0.5</version>
+    <vendor email="guillaumem@theodo.fr" url="http://www.theodo.fr">Theodo</vendor>
+
+    <description><![CDATA[
+      Plugin to highlight potential SQL Injections in PHP MySQL or Doctrine Queries<br>
+      See: https://en.wikipedia.org/wiki/SQL_injection<br>
+    ]]></description>
+
+    <change-notes><![CDATA[
+      First version of the plugin.
+      Manage more precisely function arguments
+      Manage variables flow (detect non constant assignments)
+        - When parameters of SQL methods are constant or constant composition: no problem
+        - When parameters of SQL methods are parameters of enclosing function: warning issued
+        - When parameters of SQL methods are class fields (non constant): warning issued
+        - When parameters of SQL methods are local variables, check if all assignments are constant
+        - For local variables, when at least one assignment is not constant: issues a warning
+        - Detect only parameters of type String or Mixed (unknown)
+        - Type detection retrieved from both php code and from phpdoc
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.php</depends>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.jetbrains.php">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection language="PHP"
+                         enabledByDefault="true"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         displayName="Search for potential SQL Injections in Doctrine / mysqli"
+                         implementationClass="com.theodo.php.plugins.injection.SQLInjectionHighlighting"/>
+
+    </extensions>
+
+</idea-plugin>

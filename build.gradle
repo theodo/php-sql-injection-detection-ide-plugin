@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.21'
+}
+
+group 'com.theodo.php.sqlinjection.plugin'
+version '0.5.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version '2020.1.3'
+    type 'IU'
+    localPath '/Users/gumichel/Library/ApplicationSupport/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.8538.31/IntelliJ IDEA.app'
+    alternativeIdePath '/Users/gumichel/Library/ApplicationSupport/JetBrains/Toolbox/apps/PhpStorm/ch-0/201.8538.41/PhpStorm.app'
+    plugins = [
+            'com.jetbrains.php:201.8538.31'
+    ]
+}
+patchPluginXml {
+    changeNotes """
+      - v0.5.0 First version of the plugin.<br>
+      - v0.6.0 Manage more precisely function arguments<br>
+      - v0.7.0 Manage variables flow (detect non constant assignments)<br>
+      <ul>
+        <li>When parameters of SQL methods are constant or constant composition: no problem highlighted</li>
+        <li>When parameters of SQL methods are parameters of enclosing function: warning is issued</li>
+        <li>When parameters of SQL methods are class fields (non constant): warning is issued</li>
+        <li>When parameters of SQL methods are local variables, check if all assignments are constant</li>
+        <li>For local variables, when at least one assignment is not constant: issues a warning</li>
+        <li>Detect only parameters of type String or Mixed (unknown)</li>
+        <li>Type detection is retrieved from both php code and from phpdoc</li>
+      </ul>
+      """
+}
