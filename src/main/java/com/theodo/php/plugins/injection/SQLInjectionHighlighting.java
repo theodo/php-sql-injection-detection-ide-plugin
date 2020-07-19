@@ -25,13 +25,14 @@ public class SQLInjectionHighlighting extends PhpInspection {
                     Project project = reference.getProject();
                     PhpType type = classReference.getType().global(project);
                     if (type.toString().contains("\\Doctrine\\ORM\\QueryBuilder")) {
-                        if("setParameter".equals(reference.getName()) || "setParameter1".equals(reference.getName())) {
-                            return;
+                        if(reference.getName() != null && reference.getName().toUpperCase().contains("WHERE")) {
+                            inspectAllParameters(reference, problemsHolder, "Doctrine QueryBuilder: ");
                         }
-                        inspectAllParameters(reference, problemsHolder, "Doctrine QueryBuilder: ");
                     }
                     if (type.toString().contains("\\Doctrine\\ORM\\EntityManager")) {
-                        inspectAllParameters(reference, problemsHolder, "EntityManager NativeQuery: ");
+                        if(reference.getName() != null && reference.getName().toUpperCase().contains("NATIVEQUERY")) {
+                            inspectAllParameters(reference, problemsHolder, "EntityManager NativeQuery: ");
+                        }
                     }
                     if (type.toString().contains("\\mysqli") && reference.getName() != null) {
                         if (reference.getName().contains("query") || reference.getName().contains("prepare")) {
@@ -125,13 +126,25 @@ public class SQLInjectionHighlighting extends PhpInspection {
         // PARAMETER OF THE FUNCTION IS A CLASS METHOD CALL RESULTS => UNSAFE
         @Override
         public void visitPhpMethodReference(MethodReference reference) {
-            logError();
+            PsiElement[] parameters = reference.getParameters();
+            for (PsiElement parameter : parameters) {
+                if(ParameterHelper.checkElement(parameter)){
+                    logError();
+                    return;
+                }
+            }
         }
 
         // PARAMETER OF THE FUNCTION IS A FUNCTION CALL RESULTS => UNSAFE
         @Override
         public void visitPhpFunctionCall(FunctionReference reference) {
-            logError();
+            PsiElement[] parameters = reference.getParameters();
+            for (PsiElement parameter : parameters) {
+                if(ParameterHelper.checkElement(parameter)){
+                    logError();
+                    return;
+                }
+            }
         }
 
         private void checkReferencedVariable(PsiElement resolved) {

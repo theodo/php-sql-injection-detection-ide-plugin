@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.theodo.php.sqlinjection.plugin'
-version '0.7.0'
+version '0.9.0'
 
 repositories {
     mavenCentral()
@@ -38,5 +38,7 @@ patchPluginXml {
         <li>Detect only parameters of type String or Mixed (unknown)</li>
         <li>Type detection is retrieved from both php code and from phpdoc</li>
       </ul>
+      - v0.9.0 Limit search to WHERE clauses in QueryBuilder<br>
+      - v0.9.0 Manage more precisely functions that returns WHERE clauses<br>
       """
 }
