@@ -49,7 +49,12 @@ public class SQLInjectionHighlighting extends PhpInspection {
                         inspectAllParameters(reference, problemsHolder, "mysqli: ");
                     }
                 }
-            }
+                if (reference.getName() != null && reference.getName().contains("pg_")) {
+                     if (reference.getName().contains("_query")) {
+                         inspectAllParameters(reference, problemsHolder, "pg: ");
+                     }
+                 }
+             }
 
         };
     }
