@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.theodo.php.sqlinjection.plugin'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
@@ -16,12 +16,12 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2020.1.3'
+    version '2020.2'
     type 'IU'
-    localPath '/Users/gumichel/Library/ApplicationSupport/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.8538.31/IntelliJ IDEA.app'
-    alternativeIdePath '/Users/gumichel/Library/ApplicationSupport/JetBrains/Toolbox/apps/PhpStorm/ch-0/201.8538.41/PhpStorm.app'
+    localPath '/Users/gumichel/Library/ApplicationSupport/JetBrains/Toolbox/apps/IDEA-U/ch-0/202.6397.94/IntelliJ IDEA.app'
+    alternativeIdePath '/Users/gumichel/Library/ApplicationSupport/JetBrains/Toolbox/apps/PhpStorm/ch-0/202.6397.115/PhpStorm.app'
     plugins = [
-            'com.jetbrains.php:201.8538.31'
+            'com.jetbrains.php:202.6397.115'
     ]
 }
 patchPluginXml {
@@ -41,5 +41,6 @@ patchPluginXml {
       - v0.9.0 Limit search to WHERE clauses in QueryBuilder<br>
       - v0.9.0 Manage more precisely functions that returns WHERE clauses<br>
       - v1.0.0 Add PostgreSQL inspection<br>
+      - v1.0.1 Update to PHPStorm 2020.2<br>
       """
 }
